@@ -6,6 +6,7 @@ export default function NameListClassic() {
     const [names, setNames] = useState([]);
     const [inputText, setInputText] = useState("");
     const [editingId, setEditingId] = useState(null);
+    const [viewFilter, setViewFilter] = useState("all");
 
     function addNameHandler() {
         const newTitle = { id: Date.now(), title: inputText, status: "open" };
@@ -33,19 +34,23 @@ export default function NameListClassic() {
     }
 
     function toggleStatusHandler(id) {
-  setNames(prev =>
-    prev.map(item => {
-      if (item.id === id) {
-        return {
-          ...item,
-          status: item.status === "open" ? "closed" : "open"
-        };
-      }
-      return item;
-    })
-  );
-}
+        setNames(prev =>
+            prev.map(item => {
+                if (item.id === id) {
+                    return {
+                        ...item,
+                        status: item.status === "open" ? "closed" : "open"
+                    };
+                }
+                return item;
+            })
+        );
+    }
 
+    const visibleNames =
+        viewFilter === "all"
+            ? names
+            : names.filter((item) => item.status === viewFilter);
 
     return (
         <div>
@@ -55,9 +60,14 @@ export default function NameListClassic() {
                 onChange={e => setInputText(e.target.value)} />
             <button onClick={addNameHandler}>Add</button>
             <div>
-                {names.length === 0 ? (<p>No Names yet</p>) : (
-                        names.map((item) => (
-                            <NameItem 
+                <button onClick={() => setViewFilter("all")}>All</button>
+                <button onClick={() => setViewFilter("open")}>Open</button>
+                <button onClick={() => setViewFilter("closed")}>Closed</button>
+            </div>
+            <div>
+                {visibleNames.length === 0 ? (<p>No tasks yet</p>) : (
+                    visibleNames.map((item) => (
+                        <NameItem
                             key={item.id}
                             name={item.title}
                             onDelete={() => deleteHandler(item.id)}
@@ -66,8 +76,8 @@ export default function NameListClassic() {
                             onSave={(newName) => saveEditHandler(item.id, newName)}
                             status={item.status}
                             onToggleStatus={() => toggleStatusHandler(item.id)}
-                            />
-                        ))
+                        />
+                    ))
                 )}
 
             </div>
