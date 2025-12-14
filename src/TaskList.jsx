@@ -58,6 +58,12 @@ export default function TaskList() {
     }
 
     function clearClosedTasksHandler() {
+        if (!hasClosedTasks) return;
+        const confirmed = window.confirm(
+            "Are you sure you want to clear all closed tasks?"
+        );
+        if (!confirmed) return;
+
         setTasks((prev) => prev.filter((item) => item.status !== "closed"));
     }
 
