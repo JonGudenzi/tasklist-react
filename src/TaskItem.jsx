@@ -15,7 +15,7 @@ export default function TaskItem({ task, onDelete, onStartEdit, isEditing, onSav
     {!isEditing ? (
       <>
         <div className="taskText">
-          <span className="taskTitle">{task} {" - "}</span>
+          <span className="taskTitle">{task}</span>
 <span className={`pill ${status}`}>{status}</span>
 
         </div>
