@@ -10,6 +10,16 @@ export default function TaskItem({ task, onDelete, onStartEdit, isEditing, onSav
         }
     }, [isEditing, task]);
 
+    const toggleLabel = status === "open" ? "Close" : "Reopen";
+
+    function handleEditKeyDown(e) {
+      if (e.key === "Enter") {
+        onSave(editText);
+      } if (e.key === "Escape") {
+        onCancel();
+      }
+    }
+
     return (
   <div className="taskRow">
     {!isEditing ? (
@@ -22,7 +32,7 @@ export default function TaskItem({ task, onDelete, onStartEdit, isEditing, onSav
 
         <div className="actions">
           <button className="btn" onClick={onToggleStatus}>
-            {status === "open" ? "Close" : "Reopen"}
+            {toggleLabel}
           </button>
 
           <button
@@ -44,6 +54,7 @@ export default function TaskItem({ task, onDelete, onStartEdit, isEditing, onSav
           className="textInput"
           value={editText}
           onChange={(e) => setEditText(e.target.value)}
+          onKeyDown={handleEditKeyDown}
         />
 
         <div className="actions">
