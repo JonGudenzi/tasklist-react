@@ -45,15 +45,22 @@ export default function TaskList() {
         setTasks(prev =>
             prev.map(item => {
                 if (item.id === id) {
-                    return {
-                        ...item,
-                        status: item.status === "open" ? "closed" : "open"
-                    };
+                    let nextStatus;
+
+                    if (item.status === "open") {
+                        nextStatus = "done";
+                    } else if (item.status === "done") {
+                        nextStatus = "archived";
+                    } else {
+                        nextStatus = "open";
+                    }
+                    return { ...item, status: nextStatus };
                 }
                 return item;
             })
         );
     }
+
 
     function clearClosedTasksHandler() {
         if (!hasClosedTasks) return;
@@ -121,7 +128,7 @@ export default function TaskList() {
                                 onSave={(newTask) => saveEditHandler(item.id, newTask)}
                                 disableEdit={disableEdit}
                             />)
-                            
+
                         })
                     )}
                 </div>
