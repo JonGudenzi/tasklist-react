@@ -108,6 +108,7 @@ export default function TaskList() {
                     ) : (
                         visibleTasks.map((item) => {
                             const disableEdit = editingId !== null && editingId !== item.id;
+                            const isEditing = item.id === editingId;
                             return (<TaskItem
                                 key={item.id}
                                 task={item.title}
@@ -115,7 +116,7 @@ export default function TaskList() {
                                 onToggleStatus={() => toggleStatusHandler(item.id)}
                                 onStartEdit={() => startEditHandler(item.id)}
                                 onDelete={() => deleteHandler(item.id)}
-                                isEditing={item.id === editingId}
+                                isEditing={isEditing}
                                 onCancel={cancelEditHandler}
                                 onSave={(newTask) => saveEditHandler(item.id, newTask)}
                                 disableEdit={disableEdit}
