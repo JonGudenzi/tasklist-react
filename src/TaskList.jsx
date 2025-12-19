@@ -3,6 +3,7 @@ import TaskItem from "./TaskItem";
 import FilterButtons from "./FilterButtons";
 import TaskSummary from "./TaskSummary";
 import AddTaskForm from "./AddTaskForm";
+import StatusSummary from "./StatusSummary";
 
 export default function TaskList() {
 
@@ -68,7 +69,6 @@ export default function TaskList() {
     const doneCount = tasks.filter((item) => item.status === "done").length;
     const archivedCount = tasks.filter((item) => item.status === "archived").length;
 
-
     function clearArchivedTasksHandler() {
         if (!hasArchivedTasks) return;
         const confirmed = window.confirm(
@@ -109,13 +109,12 @@ export default function TaskList() {
                     visibleCount={visibleTasks.length}
                     totalCount={tasks.length}
                 />
-
-                <div className="statusCounts">
-                    <span>Open: {openCount}</span> {" | "}
-                    <span>Done: {doneCount}</span> {" | "}
-                    <span>Archived: {archivedCount}</span> {" | "}
-                </div>
-
+                {tasks.length > 0 && (
+                    <StatusSummary
+                        openCount={openCount}
+                        doneCount={doneCount}
+                        archivedCount={archivedCount} />
+                )}
 
 
                 <div className="list">
