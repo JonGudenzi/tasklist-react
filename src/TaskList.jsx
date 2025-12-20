@@ -65,7 +65,8 @@ export default function TaskList() {
     const hasArchivedTasks =
         tasks.some((item) => item.status === "archived");
 
-
+    const hasDoneTasks =
+        tasks.some((item) => item.status === "done");
 
     function undoLastArchived() {
         setTasks((prev) => {
@@ -99,6 +100,18 @@ export default function TaskList() {
         setViewFilter("all");
     }
 
+    function archiveAllDone() {
+        setTasks((prev) =>
+            prev.map((item) => {
+                if (item.status === "done") {
+                    return { ...item, status: "archived" };
+                }
+                return item;
+            })
+        );
+        setViewFilter("all");
+    }
+
     const visibleTasks =
         viewFilter === "all"
             ? tasks
@@ -112,12 +125,16 @@ export default function TaskList() {
                         className="dangerBtn"
                         onClick={clearArchivedTasksHandler}
                         disabled={!hasArchivedTasks} >Clear Archived</button>
-                        <button
+                    <button
                         className="dangerBtn"
                         onClick={undoLastArchived}
                         disabled={!hasArchivedTasks} >Undo Last Archived</button>
+                    <button
+                        className="dangerBtn"
+                        disabled={!hasDoneTasks}
+                        onClick={archiveAllDone}>Archive All Done</button>
                 </div>
-                
+
 
                 <h2 className="title">Task List</h2>
 
