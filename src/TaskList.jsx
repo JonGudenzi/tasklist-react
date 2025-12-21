@@ -112,6 +112,18 @@ export default function TaskList() {
         setViewFilter("all");
     }
 
+    function restoreAllArchived() {
+        setTasks((prev) => 
+            prev.map((item) => {
+                if (item.status === "archived") {
+                    return { ...item, status: "done" };
+                }
+                return item;
+            })
+        );
+        setViewFilter("done");a
+    }
+
     const visibleTasks =
         viewFilter === "all"
             ? tasks
@@ -133,6 +145,10 @@ export default function TaskList() {
                         className="dangerBtn"
                         disabled={!hasDoneTasks}
                         onClick={archiveAllDone}>Archive All Done</button>
+                    <button
+                        className="dangerBtn"
+                        disabled={!hasArchivedTasks}
+                        onClick={restoreAllArchived}>Restore All Archived</button>
                 </div>
 
 
