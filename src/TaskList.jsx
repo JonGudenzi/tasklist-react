@@ -11,17 +11,22 @@ export default function TaskList() {
     const [editingId, setEditingId] = useState(null);
     const [viewFilter, setViewFilter] = useState("all");
 
+    function normalizeText(text) {
+        return (text.trim().toLowerCase())
+    }
+
     function addTaskHandler(title) {
-        const normalized = title.trim().toLowerCase();
+        const normalized = normalizeText(title);
+        if (normalized === "") return;
         const isDuplicate = tasks.some((item) => (
-            item.title.trim().toLowerCase() === normalized
+            normalizeText(item.title) === normalized
         ));
 
         if (isDuplicate) {
             window.alert("This item already exsists");
             return;
         }
-        const newTitle = { id: Date.now(), title, status: "open" };
+        const newTitle = { id: Date.now(), title: normalized, status: "open" };
         setTasks(prev => ([...prev, newTitle]));
     }
 
@@ -34,12 +39,13 @@ export default function TaskList() {
     }
 
     function saveEditHandler(id, newTask) {
-        const normalized = newTask.trim().toLowerCase();
-        const isDuplicate = tasks.some((item) => (
-            item.title.trim().toLowerCase() === normalized && item.id !== id
-        ));
+        const normalized = normalizeText(newTask);
         if (normalized === "") return;
-        else if (isDuplicate) {
+        const isDuplicate = tasks.some((item) => (
+            normalizeText(item.title) === normalized && item.id !== id
+        ));
+
+        if (isDuplicate) {
             window.alert("This item already exsists");
             return;
         }
@@ -51,8 +57,6 @@ export default function TaskList() {
         }));
         setEditingId(null);
     }
-
-
 
     function cancelEditHandler() {
         setEditingId(null);
@@ -188,7 +192,6 @@ export default function TaskList() {
                         doneCount={doneCount}
                         archivedCount={archivedCount} />
                 )}
-
 
                 <div className="list">
                     {visibleTasks.length === 0 ? (
