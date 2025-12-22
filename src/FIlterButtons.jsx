@@ -1,19 +1,19 @@
-export default function FilterButtons({ viewFilter, setViewFilter }) {
+export default function FilterButtons({ viewFilter, onChangeFilter }) {
     return (
         <div>
-                <button onClick={() => setViewFilter("all")}>
+                <button onClick={() => onChangeFilter("all")}>
                     All {viewFilter === "all" && "✓"}
                 </button>
 
-                <button onClick={() => setViewFilter("open")}>
+                <button onClick={() => onChangeFilter("open")}>
                     Open {viewFilter === "open" && "✓"}
                 </button>
 
-                <button onClick={() => setViewFilter("done")}>
+                <button onClick={() => onChangeFilter("done")}>
                     Done {viewFilter === "done" && "✓"}
                 </button>
 
-                <button onClick={() => setViewFilter("archived")}>
+                <button onClick={() => onChangeFilter("archived")}>
                     Archived {viewFilter === "archived" && "✓"}
                 </button>
             </div>

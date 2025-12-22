@@ -144,6 +144,11 @@ export default function TaskList() {
         setViewFilter("done");
     }
 
+    function changeFilter(nextFilter) {
+        setViewFilter(nextFilter);
+        setEditingId(null);
+    }
+
     const visibleTasks =
         viewFilter === "all"
             ? tasks
@@ -179,7 +184,8 @@ export default function TaskList() {
                 </div>
 
                 <div className="filterRow">
-                    <FilterButtons viewFilter={viewFilter} setViewFilter={setViewFilter} />
+                    <FilterButtons viewFilter={viewFilter} 
+                    onChangeFilter={changeFilter} />
                 </div>
 
                 <TaskSummary
