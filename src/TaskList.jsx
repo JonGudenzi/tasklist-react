@@ -17,6 +17,7 @@ export default function TaskList() {
 
     function addTaskHandler(title) {
         const normalized = normalizeText(title);
+
         if (normalized === "") return;
         const isDuplicate = tasks.some((item) => (
             normalizeText(item.title) === normalized
@@ -26,6 +27,7 @@ export default function TaskList() {
             window.alert("This item already exsists");
             return;
         }
+        
         const newTitle = { id: Date.now(), title: normalized, status: "open" };
         setTasks(prev => ([...prev, newTitle]));
     }
@@ -149,6 +151,10 @@ export default function TaskList() {
         setEditingId(null);
     }
 
+    function handleResetFilter() {
+        setViewFilter("all");
+    }
+
     const visibleTasks =
         viewFilter === "all"
             ? tasks
@@ -174,6 +180,10 @@ export default function TaskList() {
                         className="dangerBtn"
                         disabled={!hasArchivedTasks}
                         onClick={restoreAllArchived}>Restore All Archived</button>
+                        <button
+                        className="dangerBtn"
+                        disabled={viewFilter==="all"}
+                        onClick={handleResetFilter}>Reset Filter</button>
                 </div>
 
 
