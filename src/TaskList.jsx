@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TaskItem from "./TaskItem";
 import FilterButtons from "./FilterButtons";
 import TaskSummary from "./TaskSummary";
@@ -10,6 +10,17 @@ export default function TaskList() {
     const [tasks, setTasks] = useState([]);
     const [editingId, setEditingId] = useState(null);
     const [viewFilter, setViewFilter] = useState("all");
+
+    useEffect(() => {
+        const saved = localStorage.getItem("tasks");
+        if (saved) {
+            setTasks(JSON.parse(saved));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("Tasks", JSON.stringify(tasks));
+    }, [tasks]);
 
     function normalizeText(text) {
         return (text.trim().toLowerCase())
@@ -131,7 +142,7 @@ export default function TaskList() {
                 return item;
             })
         );
-        setViewFilter("all");
+        setViewFilter("archived");
     }
 
     function restoreAllArchived() {
@@ -182,7 +193,7 @@ export default function TaskList() {
                         onClick={restoreAllArchived}>Restore All Archived</button>
                         <button
                         className="dangerBtn"
-                        disabled={viewFilter==="all"}
+                        disabled={viewFilter==="all" && editingId === null}
                         onClick={handleResetFilter}>Reset Filter</button>
                 </div>
 
