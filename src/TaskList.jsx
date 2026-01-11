@@ -152,7 +152,7 @@ export default function TaskList() {
     }
 
     function handleResetFilter() {
-        setViewFilter("all");
+        changeFilter("all");  
     }
 
     const visibleTasks =
