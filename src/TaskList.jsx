@@ -7,19 +7,15 @@ import StatusSummary from "./StatusSummary";
 
 export default function TaskList() {
 
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState(() => {
+        const saved = localStorage.getItem("tasks");
+        return saved ? JSON.parse(saved) : [];
+    });
     const [editingId, setEditingId] = useState(null);
     const [viewFilter, setViewFilter] = useState("all");
 
     useEffect(() => {
-        const saved = localStorage.getItem("tasks");
-        if (saved) {
-            setTasks(JSON.parse(saved));
-        }
-    }, []);
-
-    useEffect(() => {
-        localStorage.setItem("Tasks", JSON.stringify(tasks));
+        localStorage.setItem("tasks", JSON.stringify(tasks));
     }, [tasks]);
 
     function normalizeText(text) {
