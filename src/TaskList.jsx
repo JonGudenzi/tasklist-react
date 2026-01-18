@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import TaskItem from "./TaskItem";
 import FilterButtons from "./FilterButtons";
 import AddTaskForm from "./AddTaskForm";
 import BulkActionsBar from "./BulkActionsBar";
 import ListSummaries from "./ListSummaries";
+import TaskListBody from "./TaskListBody";
 
 export default function TaskList() {
 
@@ -195,35 +195,21 @@ export default function TaskList() {
                 </div>
 
                 <ListSummaries
-                visibleCount={visibleTasks.length}
-                totalCount={tasks.length}
-                openCount={openCount}
-                doneCount={doneCount}
-                archivedCount={archivedCount} /> 
+                    visibleCount={visibleTasks.length}
+                    totalCount={tasks.length}
+                    openCount={openCount}
+                    doneCount={doneCount}
+                    archivedCount={archivedCount} />
 
-                <div className="list">
-                    {visibleTasks.length === 0 ? (
-                        <p className="muted">No tasks yet</p>
-                    ) : (
-                        visibleTasks.map((item) => {
-                            const disableEdit = editingId !== null && editingId !== item.id;
-                            const isEditing = item.id === editingId;
-                            return (<TaskItem
-                                key={item.id}
-                                task={item.title}
-                                status={item.status}
-                                onToggleStatus={() => toggleStatusHandler(item.id)}
-                                onStartEdit={() => startEditHandler(item.id)}
-                                onDelete={() => deleteHandler(item.id)}
-                                isEditing={isEditing}
-                                onCancel={cancelEditHandler}
-                                onSave={(newTask) => saveEditHandler(item.id, newTask)}
-                                disableEdit={disableEdit}
-                            />)
+                <TaskListBody
+                    visibleTasks={visibleTasks}
+                    editingId={editingId}
+                    onToggleStatus={toggleStatusHandler}
+                    onStartEdit={startEditHandler}
+                    onDelete={deleteHandler}
+                    onCancel={cancelEditHandler}
+                    onSave={saveEditHandler} />
 
-                        })
-                    )}
-                </div>
             </div>
         </div>
     );

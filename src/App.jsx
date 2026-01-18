@@ -13,7 +13,6 @@ export default function App() {
 
   return (
     <div>
-      <h1>Task List</h1>
       <button onClick={hideViewList}>{viewList ? "Hide task list" : "Show task list"}</button>
       {
         viewList && <TaskList />
