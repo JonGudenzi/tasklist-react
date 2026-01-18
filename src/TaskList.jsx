@@ -4,6 +4,7 @@ import FilterButtons from "./FilterButtons";
 import TaskSummary from "./TaskSummary";
 import AddTaskForm from "./AddTaskForm";
 import StatusSummary from "./StatusSummary";
+import BulkActionsBar from "./BulkActionsBar";
 
 export default function TaskList() {
 
@@ -34,7 +35,7 @@ export default function TaskList() {
             window.alert("This item already exsists");
             return;
         }
-        
+
         const newTitle = { id: Date.now(), title: normalized, status: "open" };
         setTasks(prev => ([...prev, newTitle]));
     }
@@ -159,7 +160,7 @@ export default function TaskList() {
     }
 
     function handleResetFilter() {
-        changeFilter("all");  
+        changeFilter("all");
     }
 
     const visibleTasks =
@@ -170,29 +171,18 @@ export default function TaskList() {
     return (
         <div className="app">
             <div className="card">
-                <div className="topRow">
-                    <button
-                        className="dangerBtn"
-                        onClick={clearArchivedTasksHandler}
-                        disabled={!hasArchivedTasks} >Clear Archived</button>
-                    <button
-                        className="dangerBtn"
-                        onClick={undoLastArchived}
-                        disabled={!hasArchivedTasks} >Undo Last Archived</button>
-                    <button
-                        className="dangerBtn"
-                        disabled={!hasDoneTasks}
-                        onClick={archiveAllDone}>Archive All Done</button>
-                    <button
-                        className="dangerBtn"
-                        disabled={!hasArchivedTasks}
-                        onClick={restoreAllArchived}>Restore All Archived</button>
-                        <button
-                        className="dangerBtn"
-                        disabled={viewFilter==="all" && editingId === null}
-                        onClick={handleResetFilter}>Reset Filter</button>
-                </div>
 
+                <BulkActionsBar
+                    hasArchivedTasks={hasArchivedTasks}
+                    hasDoneTasks={hasDoneTasks}
+                    viewFilter={viewFilter}
+                    editingId={editingId}
+                    onClearArchived={clearArchivedTasksHandler}
+                    onUndoLastArchived={undoLastArchived}
+                    onArchiveAllDone={archiveAllDone}
+                    onRestoreAllArchived={restoreAllArchived}
+                    onResetFilter={handleResetFilter}
+                />
 
                 <h2 className="title">Task List</h2>
 
@@ -201,8 +191,8 @@ export default function TaskList() {
                 </div>
 
                 <div className="filterRow">
-                    <FilterButtons viewFilter={viewFilter} 
-                    onChangeFilter={changeFilter} />
+                    <FilterButtons viewFilter={viewFilter}
+                        onChangeFilter={changeFilter} />
                 </div>
 
                 <TaskSummary
