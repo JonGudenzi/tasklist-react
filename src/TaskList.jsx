@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import FilterButtons from "./FilterButtons";
-import AddTaskForm from "./AddTaskForm";
 import BulkActionsBar from "./BulkActionsBar";
 import ListSummaries from "./ListSummaries";
 import TaskListBody from "./TaskListBody";
+import TaskControls from "./TaskControls";
 
 export default function TaskList() {
 
@@ -183,16 +182,10 @@ export default function TaskList() {
                     onResetFilter={handleResetFilter}
                 />
 
-                <h2 className="title">Task List</h2>
-
-                <div className="addRow">
-                    <AddTaskForm onAddTask={addTaskHandler} />
-                </div>
-
-                <div className="filterRow">
-                    <FilterButtons viewFilter={viewFilter}
-                        onChangeFilter={changeFilter} />
-                </div>
+                <TaskControls
+                    onAddTask={addTaskHandler}
+                    viewFilter={viewFilter}
+                    onChangeFilter={changeFilter} />
 
                 <ListSummaries
                     visibleCount={visibleTasks.length}
