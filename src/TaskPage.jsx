@@ -4,7 +4,7 @@ import ListSummaries from "./ListSummaries";
 import TaskListBody from "./TaskListBody";
 import TaskControls from "./TaskControls";
 
-export default function TaskList() {
+export default function TaskPage() {
 
     const [tasks, setTasks] = useState(() => {
         const saved = localStorage.getItem("tasks");

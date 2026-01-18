@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TaskList from "./TaskList";
+import TaskList from "./TaskPage";
 
 export default function App() {
 
