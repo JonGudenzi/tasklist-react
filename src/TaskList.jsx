@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import TaskItem from "./TaskItem";
 import FilterButtons from "./FilterButtons";
-import TaskSummary from "./TaskSummary";
 import AddTaskForm from "./AddTaskForm";
-import StatusSummary from "./StatusSummary";
 import BulkActionsBar from "./BulkActionsBar";
+import ListSummaries from "./ListSummaries";
 
 export default function TaskList() {
 
@@ -195,16 +194,12 @@ export default function TaskList() {
                         onChangeFilter={changeFilter} />
                 </div>
 
-                <TaskSummary
-                    visibleCount={visibleTasks.length}
-                    totalCount={tasks.length}
-                />
-                {tasks.length > 0 && (
-                    <StatusSummary
-                        openCount={openCount}
-                        doneCount={doneCount}
-                        archivedCount={archivedCount} />
-                )}
+                <ListSummaries
+                visibleCount={visibleTasks.length}
+                totalCount={tasks.length}
+                openCount={openCount}
+                doneCount={doneCount}
+                archivedCount={archivedCount} /> 
 
                 <div className="list">
                     {visibleTasks.length === 0 ? (
