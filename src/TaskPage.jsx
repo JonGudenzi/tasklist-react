@@ -4,7 +4,7 @@ import ListSummaries from "./ListSummaries";
 import TaskListBody from "./TaskListBody";
 import TaskControls from "./TaskControls";
 
-export default function TaskPage() {
+export default function TasksPage() {
 
     // State/Effect
     const [tasks, setTasks] = useState(() => {
