@@ -6,6 +6,7 @@ import TaskControls from "./TaskControls";
 
 export default function TaskPage() {
 
+    // State/Effect
     const [tasks, setTasks] = useState(() => {
         const saved = localStorage.getItem("tasks");
         return saved ? JSON.parse(saved) : [];
@@ -17,10 +18,29 @@ export default function TaskPage() {
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }, [tasks]);
 
+    // Helpers
     function normalizeText(text) {
         return (text.trim().toLowerCase())
     }
 
+    // Derived Values
+    const hasArchivedTasks =
+        tasks.some((item) => item.status === "archived");
+
+    const hasDoneTasks =
+        tasks.some((item) => item.status === "done");
+
+    const openCount = tasks.filter((item) => item.status === "open").length;
+    const doneCount = tasks.filter((item) => item.status === "done").length;
+    const archivedCount = tasks.filter((item) => item.status === "archived").length;
+
+    const visibleTasks =
+        viewFilter === "all"
+            ? tasks
+            : tasks.filter((item) => item.status === viewFilter);
+
+
+    // Handlers - Add / Validate
     function addTaskHandler(title) {
         const normalized = normalizeText(title);
 
@@ -38,10 +58,7 @@ export default function TaskPage() {
         setTasks(prev => ([...prev, newTitle]));
     }
 
-    function deleteHandler(idToDelete) {
-        setTasks((prev) => prev.filter((item) => item.id !== idToDelete));
-    }
-
+    // Edit Flow
     function startEditHandler(id) {
         setEditingId(id);
     }
@@ -70,6 +87,11 @@ export default function TaskPage() {
         setEditingId(null);
     }
 
+    // Per Item Actions
+    function deleteHandler(idToDelete) {
+        setTasks((prev) => prev.filter((item) => item.id !== idToDelete));
+    }
+
     function toggleStatusHandler(id) {
         setTasks(prev =>
             prev.map(item => {
@@ -90,12 +112,7 @@ export default function TaskPage() {
         );
     }
 
-    const hasArchivedTasks =
-        tasks.some((item) => item.status === "archived");
-
-    const hasDoneTasks =
-        tasks.some((item) => item.status === "done");
-
+    // Bulk Actions
     function undoLastArchived() {
         setTasks((prev) => {
             const lastArchivedTask =
@@ -112,10 +129,6 @@ export default function TaskPage() {
             });
         });
     }
-
-    const openCount = tasks.filter((item) => item.status === "open").length;
-    const doneCount = tasks.filter((item) => item.status === "done").length;
-    const archivedCount = tasks.filter((item) => item.status === "archived").length;
 
     function clearArchivedTasksHandler() {
         if (!hasArchivedTasks) return;
@@ -152,6 +165,7 @@ export default function TaskPage() {
         setViewFilter("done");
     }
 
+    // Filter Actions
     function changeFilter(nextFilter) {
         setViewFilter(nextFilter);
         setEditingId(null);
@@ -161,15 +175,10 @@ export default function TaskPage() {
         changeFilter("all");
     }
 
-    const visibleTasks =
-        viewFilter === "all"
-            ? tasks
-            : tasks.filter((item) => item.status === viewFilter);
-
+    // Render
     return (
         <div className="app">
             <div className="card">
-
                 <BulkActionsBar
                     hasArchivedTasks={hasArchivedTasks}
                     hasDoneTasks={hasDoneTasks}
@@ -181,19 +190,16 @@ export default function TaskPage() {
                     onRestoreAllArchived={restoreAllArchived}
                     onResetFilter={handleResetFilter}
                 />
-
                 <TaskControls
                     onAddTask={addTaskHandler}
                     viewFilter={viewFilter}
                     onChangeFilter={changeFilter} />
-
                 <ListSummaries
                     visibleCount={visibleTasks.length}
                     totalCount={tasks.length}
                     openCount={openCount}
                     doneCount={doneCount}
                     archivedCount={archivedCount} />
-
                 <TaskListBody
                     visibleTasks={visibleTasks}
                     editingId={editingId}
@@ -202,9 +208,7 @@ export default function TaskPage() {
                     onDelete={deleteHandler}
                     onCancel={cancelEditHandler}
                     onSave={saveEditHandler} />
-
             </div>
         </div>
     );
-
 }
