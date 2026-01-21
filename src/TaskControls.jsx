@@ -18,7 +18,12 @@ export default function TaskControls({
                 <FilterButtons viewFilter={viewFilter}
                     onChangeFilter={onChangeFilter} />
             </div>
-        </>
 
+            {viewFilter !== "all" && 
+            <button
+                onClick={() => onChangeFilter("all")}>
+                Clear Filter
+            </button>}
+        </>
     );
 }
