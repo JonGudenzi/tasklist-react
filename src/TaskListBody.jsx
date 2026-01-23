@@ -15,21 +15,21 @@ export default function TaskListBody({
                 <p className="muted">No tasks yet</p>
             ) : (
                 visibleTasks.map((item) => {
-                    const disableEdit = editingId !== null && editingId !== item.id;
-                    const isEditing = item.id === editingId;
+                    const isArchived = item.status === "archived";
+                    const disableEdit = isArchived || (editingId !== null && editingId !== item.id);
+                    const isEditing = !isArchived && item.id === editingId;
                     return <TaskItem
                         key={item.id}
                         task={item.title}
                         status={item.status}
                         onToggleStatus={() => onToggleStatus(item.id)}
-                        onStartEdit={() => onStartEdit(item.id)}
+                        onStartEdit={() => {if (!isArchived) {onStartEdit(item.id)}}}
                         onDelete={() => onDelete(item.id)}
                         isEditing={isEditing}
                         onCancel={onCancel}
                         onSave={(newTask) => onSave(item.id, newTask)}
                         disableEdit={disableEdit}
                     />
-
                 })
             )}
         </div>

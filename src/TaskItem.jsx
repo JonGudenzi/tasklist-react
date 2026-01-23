@@ -45,7 +45,8 @@ return (
           <span className={`pill ${status}`}>{status}</span>
         </div>
         <div className="actions">
-          <button className="btn" onClick={onToggleStatus}>
+          <button className="btn" 
+          onClick={onToggleStatus}>
             {toggleLabel}
           </button>
 
