@@ -18,6 +18,8 @@ export default function TaskListBody({
                     const isArchived = item.status === "archived";
                     const disableEdit = isArchived || (editingId !== null && editingId !== item.id);
                     const isEditing = !isArchived && item.id === editingId;
+                    const isLocked = editingId !== null && item.id !== editingId;
+
                     return <TaskItem
                         key={item.id}
                         task={item.title}
@@ -29,6 +31,7 @@ export default function TaskListBody({
                         onCancel={onCancel}
                         onSave={(newTask) => onSave(item.id, newTask)}
                         disableEdit={disableEdit}
+                        isLocked={isLocked}
                     />
                 })
             )}

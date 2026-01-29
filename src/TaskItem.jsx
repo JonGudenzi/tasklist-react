@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 
-export default function TaskItem({ task, onDelete, onStartEdit, isEditing, onSave, onCancel, status, onToggleStatus, disableEdit }) {
+export default function TaskItem({ task, onDelete, onStartEdit, isEditing, onSave, onCancel, status, onToggleStatus, disableEdit, isLocked }) {
 
   const [editText, setEditText] = useState(task);
 
@@ -58,7 +58,9 @@ return (
             Edit
           </button>
 
-          <button className="btn danger" onClick={onDelete}>
+          <button className="btn danger" 
+          onClick={onDelete}
+          disabled={isLocked}>
             Delete
           </button>
         </div>
