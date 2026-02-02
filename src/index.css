@@ -72,11 +72,12 @@
   cursor: pointer;
 }
 
-.btn:hover,
-.primaryBtn:hover,
-.dangerBtn:hover {
+.btn:not(:disabled):hover,
+.primaryBtn:not(:disabled):hover,
+.dangerBtn:not(:disabled):hover {
   border-color: #666;
 }
+
 
 .btn:disabled,
 .primaryBtn:disabled,
