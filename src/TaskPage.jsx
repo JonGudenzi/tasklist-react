@@ -65,11 +65,15 @@ export default function TasksPage() {
 
     function saveEditHandler(id, newTask) {
         const normalized = normalizeText(newTask);
+       const currentTask = tasks.find((item) => item.id === id);
+        if(normalizeText(currentTask.title) === normalized){
+            cancelEditHandler();
+            return;
+        } 
         if (normalized === "") return;
         const isDuplicate = tasks.some((item) => (
             normalizeText(item.title) === normalized && item.id !== id
         ));
-
         if (isDuplicate) {
             window.alert("This item already exsists");
             return;
