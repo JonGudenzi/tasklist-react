@@ -128,6 +128,7 @@ export default function TasksPage() {
                 return item;
             });
         });
+        setEditingId(null);
     }
 
     function clearArchivedTasksHandler() {
@@ -139,6 +140,7 @@ export default function TasksPage() {
 
         setTasks((prev) => prev.filter((item) => item.status !== "archived"));
         setViewFilter("all");
+        setEditingId(null);
     }
 
     function archiveAllDone() {
@@ -151,6 +153,7 @@ export default function TasksPage() {
             })
         );
         setViewFilter("archived");
+        setEditingId(null);
     }
 
     function restoreAllArchived() {
@@ -163,6 +166,7 @@ export default function TasksPage() {
             })
         );
         setViewFilter("done");
+        setEditingId(null);
     }
 
     // Filter Actions
