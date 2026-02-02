@@ -46,6 +46,7 @@ return (
         </div>
         <div className="actions">
           <button className="btn" 
+          disabled={isLocked}
           onClick={onToggleStatus}>
             {toggleLabel}
           </button>
