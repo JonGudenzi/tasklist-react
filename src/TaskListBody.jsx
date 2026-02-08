@@ -8,6 +8,7 @@ export default function TaskListBody({
     onDelete,
     onCancel,
     onSave,
+    isEditingNow
 }) {
     return (
         <div className="list">
@@ -16,9 +17,9 @@ export default function TaskListBody({
             ) : (
                 visibleTasks.map((item) => {
                     const isArchived = item.status === "archived";
-                    const disableEdit = isArchived || (editingId !== null && editingId !== item.id);
+                    const disableEdit = isArchived || (isEditingNow && editingId !== item.id);
                     const isEditing = !isArchived && item.id === editingId;
-                    const isLocked = editingId !== null && item.id !== editingId;
+                    const isLocked = isEditingNow && item.id !== editingId;
 
                     return <TaskItem
                         key={item.id}

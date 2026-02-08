@@ -33,12 +33,14 @@ export default function TasksPage() {
     const openCount = tasks.filter((item) => item.status === "open").length;
     const doneCount = tasks.filter((item) => item.status === "done").length;
     const archivedCount = tasks.filter((item) => item.status === "archived").length;
+    const isEditingNow = editingId !== null;
 
     const visibleTasks =
         viewFilter === "all"
             ? tasks
             : tasks.filter((item) => item.status === viewFilter);
 
+            
 
     // Handlers - Add / Validate
     function addTaskHandler(title) {
@@ -192,6 +194,7 @@ export default function TasksPage() {
                     hasDoneTasks={hasDoneTasks}
                     viewFilter={viewFilter}
                     editingId={editingId}
+                    isEditingNow={isEditingNow}
                     onClearArchived={clearArchivedTasksHandler}
                     onUndoLastArchived={undoLastArchived}
                     onArchiveAllDone={archiveAllDone}
@@ -211,6 +214,7 @@ export default function TasksPage() {
                 <TaskListBody
                     visibleTasks={visibleTasks}
                     editingId={editingId}
+                    isEditingNow={isEditingNow}
                     onToggleStatus={toggleStatusHandler}
                     onStartEdit={startEditHandler}
                     onDelete={deleteHandler}

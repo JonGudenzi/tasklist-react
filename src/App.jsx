@@ -21,3 +21,23 @@ export default function App() {
     </div>
   );
 }
+
+
+
+// const tasks = [
+//   { id: 1, title: "walk the dog"},
+//   { id: 2, title: "feed the dog"},
+//   { id: 3, title: "wash the dog"}
+// ]
+
+// function selectTask(tasks, id) {
+//  return tasks.find((item) => {
+//   if(item.id === id){
+//     return item;
+//   }
+//  });
+// }
+
+// selectTask(tasks, 2);
+
+// console.log(selectTask(tasks, 2));

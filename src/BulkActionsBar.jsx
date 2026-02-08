@@ -9,6 +9,7 @@ export default function BulkActionsBar({
     onArchiveAllDone,
     onRestoreAllArchived,
     onResetFilter,
+    isEditingNow
 }) {
 return(
     <div className="topRow">
@@ -30,7 +31,7 @@ return(
                         onClick={onRestoreAllArchived}>Restore All Archived</button>
                         <button
                         className="dangerBtn"
-                        disabled={viewFilter==="all" && editingId === null}
+                        disabled={viewFilter==="all" && isEditingNow}
                         onClick={onResetFilter}>Reset Filter</button>
                 </div>
 )
