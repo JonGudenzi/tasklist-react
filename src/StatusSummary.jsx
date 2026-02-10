@@ -1,14 +1,10 @@
-export default function StatusSummary({ 
-    openCount, 
-    doneCount, 
-    archivedCount, 
-    activeTaskCount }) {
+export default function StatusSummary({ taskCounts }) {
     return (
         <div className="statusCounts">
-                    <span>Active: {activeTaskCount}</span> {" | "}
-                    <span>Open: {openCount}</span> {" | "}
-                    <span>Done: {doneCount}</span> {" | "}
-                    <span>Archived: {archivedCount}</span> {" | "}
-                </div>
+            <span>Active: {taskCounts.active}</span> {" | "}
+            <span>Open: {taskCounts.open}</span> {" | "}
+            <span>Done: {taskCounts.done}</span> {" | "}
+            <span>Archived: {taskCounts.archived}</span> {" | "}
+        </div>
     )
 }

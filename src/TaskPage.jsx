@@ -30,7 +30,7 @@ export default function TasksPage() {
     const hasDoneTasks =
         tasks.some((item) => item.status === "done");
 
-    const statusCounts = tasks.reduce((totals, item) => {
+    const taskCounts = tasks.reduce((totals, item) => {
         if (item.status === "open") {
             totals.open = totals.open + 1;
             return totals;
@@ -42,20 +42,7 @@ export default function TasksPage() {
             return totals;
         } else { return totals }
     }, { open: 0, done: 0, archived: 0 })
-statusCounts.active = statusCounts.open + statusCounts.done;
-
-    console.log(statusCounts);
-
-    const activeTaskCount =
-        tasks.reduce((total, item) => {
-            if (item.status !== "archived") {
-                return total + 1;
-            } return total;
-        }, 0);
-
-    const openCount = tasks.filter((item) => item.status === "open").length;
-    const doneCount = tasks.filter((item) => item.status === "done").length;
-    const archivedCount = tasks.filter((item) => item.status === "archived").length;
+    taskCounts.active = taskCounts.open + taskCounts.done;
 
     const isEditingNow = editingId !== null;
 
@@ -63,8 +50,6 @@ statusCounts.active = statusCounts.open + statusCounts.done;
         viewFilter === "all"
             ? tasks
             : tasks.filter((item) => item.status === viewFilter);
-
-
 
     // Handlers - Add / Validate
     function addTaskHandler(title) {
@@ -232,10 +217,7 @@ statusCounts.active = statusCounts.open + statusCounts.done;
                 <ListSummaries
                     visibleCount={visibleTasks.length}
                     totalCount={tasks.length}
-                    openCount={openCount}
-                    doneCount={doneCount}
-                    archivedCount={archivedCount}
-                    activeTaskCount={activeTaskCount} />
+                    taskCounts={taskCounts} />
                 <TaskListBody
                     visibleTasks={visibleTasks}
                     editingId={editingId}

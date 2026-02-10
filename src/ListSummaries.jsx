@@ -4,10 +4,7 @@ import StatusSummary from "./StatusSummary";
 export default function ListSummaries({
     visibleCount,
     totalCount,
-    openCount,
-    doneCount,
-    archivedCount,
-    activeTaskCount
+    taskCounts
 }) {
     return (
         <>
@@ -18,10 +15,7 @@ export default function ListSummaries({
 
                 {totalCount > 0 && (
                     <StatusSummary 
-                    openCount={openCount}
-                    doneCount={doneCount}
-                    archivedCount={archivedCount}
-                    activeTaskCount={activeTaskCount} 
+                    taskCounts={taskCounts}
                     />
                 )}
         </>
