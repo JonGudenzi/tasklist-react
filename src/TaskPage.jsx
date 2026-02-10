@@ -30,6 +30,22 @@ export default function TasksPage() {
     const hasDoneTasks =
         tasks.some((item) => item.status === "done");
 
+    const statusCounts = tasks.reduce((totals, item) => {
+        if (item.status === "open") {
+            totals.open = totals.open + 1;
+            return totals;
+        } else if (item.status === "done") {
+            totals.done = totals.done + 1;
+            return totals;
+        } else if (item.status === "archived") {
+            totals.archived = totals.archived + 1;
+            return totals;
+        } else { return totals }
+    }, { open: 0, done: 0, archived: 0 })
+statusCounts.active = statusCounts.open + statusCounts.done;
+
+    console.log(statusCounts);
+
     const activeTaskCount =
         tasks.reduce((total, item) => {
             if (item.status !== "archived") {
@@ -40,6 +56,7 @@ export default function TasksPage() {
     const openCount = tasks.filter((item) => item.status === "open").length;
     const doneCount = tasks.filter((item) => item.status === "done").length;
     const archivedCount = tasks.filter((item) => item.status === "archived").length;
+
     const isEditingNow = editingId !== null;
 
     const visibleTasks =
