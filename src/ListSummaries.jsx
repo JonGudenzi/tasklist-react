@@ -11,13 +11,13 @@ export default function ListSummaries({
             <TaskSummary
                 visibleCount={visibleCount}
                 totalCount={totalCount}
-                />
+            />
 
-                {totalCount > 0 && (
-                    <StatusSummary 
+            {totalCount > 0 && (
+                <StatusSummary
                     taskCounts={taskCounts}
-                    />
-                )}
+                />
+            )}
         </>
     );
 }

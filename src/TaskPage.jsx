@@ -32,15 +32,13 @@ export default function TasksPage() {
 
     const taskCounts = tasks.reduce((totals, item) => {
         if (item.status === "open") {
-            totals.open = totals.open + 1;
-            return totals;
+            totals.open++;
         } else if (item.status === "done") {
-            totals.done = totals.done + 1;
-            return totals;
+            totals.done++;
         } else if (item.status === "archived") {
-            totals.archived = totals.archived + 1;
-            return totals;
-        } else { return totals }
+            totals.archived++;
+        }
+        return totals;
     }, { open: 0, done: 0, archived: 0 })
     taskCounts.active = taskCounts.open + taskCounts.done;
 
