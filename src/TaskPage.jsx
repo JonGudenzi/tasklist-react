@@ -30,6 +30,13 @@ export default function TasksPage() {
     const hasDoneTasks =
         tasks.some((item) => item.status === "done");
 
+    const activeTaskCount =
+        tasks.reduce((total, item) => {
+            if (item.status !== "archived") {
+                return total + 1;
+            } return total;
+        }, 0);
+
     const openCount = tasks.filter((item) => item.status === "open").length;
     const doneCount = tasks.filter((item) => item.status === "done").length;
     const archivedCount = tasks.filter((item) => item.status === "archived").length;
@@ -40,7 +47,7 @@ export default function TasksPage() {
             ? tasks
             : tasks.filter((item) => item.status === viewFilter);
 
-            
+
 
     // Handlers - Add / Validate
     function addTaskHandler(title) {
@@ -67,11 +74,11 @@ export default function TasksPage() {
 
     function saveEditHandler(id, newTask) {
         const normalized = normalizeText(newTask);
-       const currentTask = tasks.find((item) => item.id === id);
-        if(normalizeText(currentTask.title) === normalized){
+        const currentTask = tasks.find((item) => item.id === id);
+        if (normalizeText(currentTask.title) === normalized) {
             cancelEditHandler();
             return;
-        } 
+        }
         if (normalized === "") return;
         const isDuplicate = tasks.some((item) => (
             normalizeText(item.title) === normalized && item.id !== id
@@ -210,7 +217,8 @@ export default function TasksPage() {
                     totalCount={tasks.length}
                     openCount={openCount}
                     doneCount={doneCount}
-                    archivedCount={archivedCount} />
+                    archivedCount={archivedCount}
+                    activeTaskCount={activeTaskCount} />
                 <TaskListBody
                     visibleTasks={visibleTasks}
                     editingId={editingId}

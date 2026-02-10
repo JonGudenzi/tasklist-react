@@ -7,18 +7,21 @@ export default function ListSummaries({
     openCount,
     doneCount,
     archivedCount,
+    activeTaskCount
 }) {
     return (
         <>
             <TaskSummary
                 visibleCount={visibleCount}
-                totalCount={totalCount} />
+                totalCount={totalCount}
+                />
 
                 {totalCount > 0 && (
                     <StatusSummary 
                     openCount={openCount}
                     doneCount={doneCount}
                     archivedCount={archivedCount}
+                    activeTaskCount={activeTaskCount} 
                     />
                 )}
         </>
