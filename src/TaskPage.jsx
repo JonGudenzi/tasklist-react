@@ -24,12 +24,6 @@ export default function TasksPage() {
     }
 
     // Derived Values
-    const hasArchivedTasks =
-        tasks.some((item) => item.status === "archived");
-
-    const hasDoneTasks =
-        tasks.some((item) => item.status === "done");
-
     const taskCounts = tasks.reduce((totals, item) => {
         if (item.status === "open") {
             totals.open++;
@@ -41,6 +35,8 @@ export default function TasksPage() {
         return totals;
     }, { open: 0, done: 0, archived: 0 })
     taskCounts.active = taskCounts.open + taskCounts.done;
+    const hasArchivedTasks = taskCounts.archived > 0;
+    const hasDoneTasks = taskCounts.done > 0;
 
     const isEditingNow = editingId !== null;
 
