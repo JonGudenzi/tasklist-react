@@ -1,6 +1,16 @@
 import { useEffect, useState, useRef } from "react";
 
-export default function TaskItem({ task, onDelete, onStartEdit, isEditing, onSave, onCancel, status, onToggleStatus, disableEdit, isLocked }) {
+export default function TaskItem({ 
+  task, 
+  onDelete, 
+  onStartEdit, 
+  isEditing, 
+  onSave, 
+  onCancel, 
+  status, 
+  onToggleStatus, 
+  disableEdit, 
+  isLocked }) {
 
   const [editText, setEditText] = useState(task);
 

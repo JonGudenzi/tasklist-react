@@ -3,7 +3,6 @@ export default function BulkActionsBar({
     hasArchivedTasks,
     hasDoneTasks,
     viewFilter,
-    editingId,
     onClearArchived,
     onUndoLastArchived,
     onArchiveAllDone,
@@ -16,22 +15,22 @@ return(
                     <button
                         className="dangerBtn"
                         onClick={onClearArchived}
-                        disabled={!hasArchivedTasks} >Clear Archived</button>
+                        disabled={!hasArchivedTasks || isEditingNow} >Clear Archived</button>
                     <button
                         className="dangerBtn"
                         onClick={onUndoLastArchived}
-                        disabled={!hasArchivedTasks} >Undo Last Archived</button>
+                        disabled={!hasArchivedTasks || isEditingNow} >Undo Last Archived</button>
                     <button
                         className="dangerBtn"
-                        disabled={!hasDoneTasks}
+                        disabled={!hasDoneTasks || isEditingNow}
                         onClick={onArchiveAllDone}>Archive All Done</button>
                     <button
                         className="dangerBtn"
-                        disabled={!hasArchivedTasks}
+                        disabled={!hasArchivedTasks || isEditingNow}
                         onClick={onRestoreAllArchived}>Restore All Archived</button>
                         <button
                         className="dangerBtn"
-                        disabled={viewFilter==="all" && isEditingNow}
+                        disabled={viewFilter==="all"}
                         onClick={onResetFilter}>Reset Filter</button>
                 </div>
 )
