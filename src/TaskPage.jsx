@@ -3,6 +3,7 @@ import BulkActionsBar from "./BulkActionsBar";
 import ListSummaries from "./ListSummaries";
 import TaskListBody from "./TaskListBody";
 import TaskControls from "./TaskControls";
+import useViewFilter from "./hooks/useViewFilter";
 
 export default function TasksPage() {
 
@@ -12,7 +13,7 @@ export default function TasksPage() {
         return saved ? JSON.parse(saved) : [];
     });
     const [editingId, setEditingId] = useState(null);
-    const [viewFilter, setViewFilter] = useState("all");
+    const { viewFilter, changeFilter, resetFilter } = useViewFilter();
 
     useEffect(() => {
         localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -148,7 +149,7 @@ export default function TasksPage() {
         if (!confirmed) return;
 
         setTasks((prev) => prev.filter((item) => item.status !== "archived"));
-        setViewFilter("all");
+        changeFilter("all");
         setEditingId(null);
     }
 
@@ -161,7 +162,7 @@ export default function TasksPage() {
                 return item;
             })
         );
-        setViewFilter("archived");
+        changeFilter("archived");
         setEditingId(null);
     }
 
@@ -174,18 +175,18 @@ export default function TasksPage() {
                 return item;
             })
         );
-        setViewFilter("done");
+        changeFilter("done");
         setEditingId(null);
     }
 
     // Filter Actions
-    function changeFilter(nextFilter) {
-        setViewFilter(nextFilter);
+ function handleFilterChange(nextFilter) {
+        changeFilter(nextFilter);
         setEditingId(null);
     }
 
     function handleResetFilter() {
-        changeFilter("all");
+        handleFilterChange("all");
     }
 
     // Render
@@ -207,7 +208,7 @@ export default function TasksPage() {
                 <TaskControls
                     onAddTask={addTaskHandler}
                     viewFilter={viewFilter}
-                    onChangeFilter={changeFilter} />
+                    onChangeFilter={handleFilterChange} />
                 <ListSummaries
                     visibleCount={visibleTasks.length}
                     totalCount={tasks.length}
