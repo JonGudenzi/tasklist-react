@@ -7,9 +7,5 @@ export default function useViewFilter(initial = "all"){
         setViewFilter(nextFilter);
     }
 
-    function resetFilter() {
-        setViewFilter("all");
-    }
-
-    return { viewFilter, changeFilter, resetFilter };
+    return { viewFilter, changeFilter };
 }

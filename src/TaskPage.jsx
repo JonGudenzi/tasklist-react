@@ -13,7 +13,7 @@ export default function TasksPage() {
         return saved ? JSON.parse(saved) : [];
     });
     const [editingId, setEditingId] = useState(null);
-    const { viewFilter, changeFilter, resetFilter } = useViewFilter();
+    const { viewFilter, changeFilter } = useViewFilter();
 
     useEffect(() => {
         localStorage.setItem("tasks", JSON.stringify(tasks));
