@@ -1,23 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BulkActionsBar from "./BulkActionsBar";
 import ListSummaries from "./ListSummaries";
 import TaskListBody from "./TaskListBody";
 import TaskControls from "./TaskControls";
 import useViewFilter from "./hooks/useViewFilter";
+import useTasks from "./hooks/useTasks";
 
 export default function TasksPage() {
 
     // State/Effect
-    const [tasks, setTasks] = useState(() => {
-        const saved = localStorage.getItem("tasks");
-        return saved ? JSON.parse(saved) : [];
-    });
     const [editingId, setEditingId] = useState(null);
     const { viewFilter, changeFilter } = useViewFilter();
-
-    useEffect(() => {
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-    }, [tasks]);
+    const { tasks, setTasks, taskCounts, active, hasArchivedTasks, hasDoneTasks } = useTasks();
 
     // Helpers
     function normalizeText(text) {
@@ -25,26 +19,13 @@ export default function TasksPage() {
     }
 
     // Derived Values
-    const taskCounts = tasks.reduce((totals, item) => {
-        if (item.status === "open") {
-            totals.open++;
-        } else if (item.status === "done") {
-            totals.done++;
-        } else if (item.status === "archived") {
-            totals.archived++;
-        }
-        return totals;
-    }, { open: 0, done: 0, archived: 0 })
-    taskCounts.active = taskCounts.open + taskCounts.done;
-    const hasArchivedTasks = taskCounts.archived > 0;
-    const hasDoneTasks = taskCounts.done > 0;
+const visibleTasks =
+  viewFilter === "all"
+    ? tasks
+    : tasks.filter((item) => item.status === viewFilter);
 
     const isEditingNow = editingId !== null;
 
-    const visibleTasks =
-        viewFilter === "all"
-            ? tasks
-            : tasks.filter((item) => item.status === viewFilter);
 
     // Handlers - Add / Validate
     function addTaskHandler(title) {
@@ -180,7 +161,7 @@ export default function TasksPage() {
     }
 
     // Filter Actions
- function handleFilterChange(nextFilter) {
+    function handleFilterChange(nextFilter) {
         changeFilter(nextFilter);
         setEditingId(null);
     }
