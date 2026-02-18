@@ -16,8 +16,8 @@ export default function useTasks() {
         }
         return totals;
     }, { open: 0, done: 0, archived: 0 })
-    const active = taskCounts.active = taskCounts.open + taskCounts.done;
-   
+    taskCounts.active = taskCounts.open + taskCounts.done;
+
     const hasArchivedTasks = taskCounts.archived > 0;
     const hasDoneTasks = taskCounts.done > 0;
 
@@ -29,7 +29,6 @@ export default function useTasks() {
         tasks,
         setTasks,
         taskCounts,
-        active,
         hasArchivedTasks,
         hasDoneTasks
     };

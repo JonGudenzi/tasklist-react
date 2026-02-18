@@ -11,7 +11,7 @@ export default function TasksPage() {
     // State/Effect
     const [editingId, setEditingId] = useState(null);
     const { viewFilter, changeFilter } = useViewFilter();
-    const { tasks, setTasks, taskCounts, active, hasArchivedTasks, hasDoneTasks } = useTasks();
+    const { tasks, setTasks, taskCounts, hasArchivedTasks, hasDoneTasks } = useTasks();
 
     // Helpers
     function normalizeText(text) {
