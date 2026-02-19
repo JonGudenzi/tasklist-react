@@ -6,6 +6,10 @@ export default function useTasks() {
         return saved ? JSON.parse(saved) : [];
     });
 
+    useEffect(() => {
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }, [tasks]);
+
     const taskCounts = tasks.reduce((totals, item) => {
         if (item.status === "open") {
             totals.open++;
@@ -20,10 +24,6 @@ export default function useTasks() {
 
     const hasArchivedTasks = taskCounts.archived > 0;
     const hasDoneTasks = taskCounts.done > 0;
-
-    useEffect(() => {
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-    }, [tasks]);
 
     return {
         tasks,

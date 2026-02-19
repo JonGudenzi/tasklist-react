@@ -11,19 +11,21 @@ export default function TaskControls({
             <h2 className="title">Task List</h2>
 
             <div className="addRow">
-                <AddTaskForm onAddTask={onAddTask} />
+                <AddTaskForm
+                    onAddTask={onAddTask} />
             </div>
 
             <div className="filterRow">
-                <FilterButtons viewFilter={viewFilter}
+                <FilterButtons
+                    viewFilter={viewFilter}
                     onChangeFilter={onChangeFilter} />
             </div>
 
-            {viewFilter !== "all" && 
-            <button
-                onClick={() => onChangeFilter("all")}>
-                Clear Filter
-            </button>}
+            {viewFilter !== "all" &&
+                <button
+                    onClick={() => onChangeFilter("all")}>
+                    Clear Filter
+                </button>}
         </>
     );
 }

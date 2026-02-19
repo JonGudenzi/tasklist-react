@@ -19,13 +19,12 @@ export default function TasksPage() {
     }
 
     // Derived Values
-const visibleTasks =
-  viewFilter === "all"
-    ? tasks
-    : tasks.filter((item) => item.status === viewFilter);
+    const visibleTasks =
+        viewFilter === "all"
+            ? tasks
+            : tasks.filter((item) => item.status === viewFilter);
 
     const isEditingNow = editingId !== null;
-
 
     // Handlers - Add / Validate
     function addTaskHandler(title) {
