@@ -5,11 +5,12 @@ import TaskListBody from "./TaskListBody";
 import TaskControls from "./TaskControls";
 import useViewFilter from "./hooks/useViewFilter";
 import useTasks from "./hooks/useTasks";
+import useEditing from "./hooks/useEditing";
 
 export default function TasksPage() {
 
     // State/Effect
-    const [editingId, setEditingId] = useState(null);
+    const { editingId, isEditingNow, startEdit, cancelEdit } = useEditing(); 
     const { viewFilter, changeFilter } = useViewFilter();
     const { tasks, setTasks, taskCounts, hasArchivedTasks, hasDoneTasks } = useTasks();
 
@@ -23,8 +24,6 @@ export default function TasksPage() {
         viewFilter === "all"
             ? tasks
             : tasks.filter((item) => item.status === viewFilter);
-
-    const isEditingNow = editingId !== null;
 
     // Handlers - Add / Validate
     function addTaskHandler(title) {
@@ -45,15 +44,11 @@ export default function TasksPage() {
     }
 
     // Edit Flow
-    function startEditHandler(id) {
-        setEditingId(id);
-    }
-
-    function saveEditHandler(id, newTask) {
+function saveEditHandler(id, newTask) {
         const normalized = normalizeText(newTask);
         const currentTask = tasks.find((item) => item.id === id);
         if (normalizeText(currentTask.title) === normalized) {
-            cancelEditHandler();
+            cancelEdit();
             return;
         }
         if (normalized === "") return;
@@ -70,12 +65,9 @@ export default function TasksPage() {
             }
             return item;
         }));
-        setEditingId(null);
+        cancelEdit();
     }
-
-    function cancelEditHandler() {
-        setEditingId(null);
-    }
+    
 
     // Per Item Actions
     function deleteHandler(idToDelete) {
@@ -118,7 +110,7 @@ export default function TasksPage() {
                 return item;
             });
         });
-        setEditingId(null);
+        cancelEdit();
     }
 
     function clearArchivedTasksHandler() {
@@ -130,7 +122,7 @@ export default function TasksPage() {
 
         setTasks((prev) => prev.filter((item) => item.status !== "archived"));
         changeFilter("all");
-        setEditingId(null);
+        cancelEdit();
     }
 
     function archiveAllDone() {
@@ -143,7 +135,7 @@ export default function TasksPage() {
             })
         );
         changeFilter("archived");
-        setEditingId(null);
+        cancelEdit();
     }
 
     function restoreAllArchived() {
@@ -156,13 +148,13 @@ export default function TasksPage() {
             })
         );
         changeFilter("done");
-        setEditingId(null);
+        cancelEdit();
     }
 
     // Filter Actions
     function handleFilterChange(nextFilter) {
         changeFilter(nextFilter);
-        setEditingId(null);
+        cancelEdit();
     }
 
     function handleResetFilter() {
@@ -198,10 +190,10 @@ export default function TasksPage() {
                     editingId={editingId}
                     isEditingNow={isEditingNow}
                     onToggleStatus={toggleStatusHandler}
-                    onStartEdit={startEditHandler}
                     onDelete={deleteHandler}
-                    onCancel={cancelEditHandler}
-                    onSave={saveEditHandler} />
+                    onCancel={cancelEdit}
+                    onSave={saveEditHandler} 
+                    onStartEdit={startEdit}/>
             </div>
         </div>
     );
