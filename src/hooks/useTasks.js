@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import getNextStatus from "./useTaskStatus";
 
 export default function useTasks() {
     const [tasks, setTasks] = useState(() => {
@@ -25,11 +26,24 @@ export default function useTasks() {
     const hasArchivedTasks = taskCounts.archived > 0;
     const hasDoneTasks = taskCounts.done > 0;
 
+    function toggleStatus(id) {
+        setTasks(prev =>
+            prev.map(item => {
+                if (item.id === id) {
+                    const nextStatus = getNextStatus(item.status);
+                    return { ...item, status: nextStatus };
+                }
+                return item;
+            })
+        );
+    }
+
     return {
         tasks,
         setTasks,
         taskCounts,
         hasArchivedTasks,
-        hasDoneTasks
+        hasDoneTasks,
+        toggleStatus
     };
 }

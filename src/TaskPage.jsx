@@ -1,4 +1,3 @@
-import { useState } from "react";
 import BulkActionsBar from "./BulkActionsBar";
 import ListSummaries from "./ListSummaries";
 import TaskListBody from "./TaskListBody";
@@ -7,12 +6,13 @@ import useViewFilter from "./hooks/useViewFilter";
 import useTasks from "./hooks/useTasks";
 import useEditing from "./hooks/useEditing";
 
+
 export default function TasksPage() {
 
     // State/Effect
-    const { editingId, isEditingNow, startEdit, cancelEdit } = useEditing(); 
+    const { editingId, isEditingNow, startEdit, cancelEdit } = useEditing();
     const { viewFilter, changeFilter } = useViewFilter();
-    const { tasks, setTasks, taskCounts, hasArchivedTasks, hasDoneTasks } = useTasks();
+    const { tasks, setTasks, taskCounts, hasArchivedTasks, hasDoneTasks, toggleStatus } = useTasks();
 
     // Helpers
     function normalizeText(text) {
@@ -44,7 +44,7 @@ export default function TasksPage() {
     }
 
     // Edit Flow
-function saveEditHandler(id, newTask) {
+    function saveEditHandler(id, newTask) {
         const normalized = normalizeText(newTask);
         const currentTask = tasks.find((item) => item.id === id);
         if (normalizeText(currentTask.title) === normalized) {
@@ -67,32 +67,14 @@ function saveEditHandler(id, newTask) {
         }));
         cancelEdit();
     }
-    
+
 
     // Per Item Actions
     function deleteHandler(idToDelete) {
         setTasks((prev) => prev.filter((item) => item.id !== idToDelete));
     }
 
-    function toggleStatusHandler(id) {
-        setTasks(prev =>
-            prev.map(item => {
-                if (item.id === id) {
-                    let nextStatus;
-
-                    if (item.status === "open") {
-                        nextStatus = "done";
-                    } else if (item.status === "done") {
-                        nextStatus = "archived";
-                    } else {
-                        nextStatus = "open";
-                    }
-                    return { ...item, status: nextStatus };
-                }
-                return item;
-            })
-        );
-    }
+    
 
     // Bulk Actions
     function undoLastArchived() {
@@ -152,12 +134,12 @@ function saveEditHandler(id, newTask) {
     }
 
     // Filter Actions
-    function handleFilterChange(nextFilter) {
+    function changeFilterAndCancelEdit(nextFilter) {
         changeFilter(nextFilter);
         cancelEdit();
     }
 
-    function handleResetFilter() {
+    function resetFilterToAll() {
         handleFilterChange("all");
     }
 
@@ -175,12 +157,12 @@ function saveEditHandler(id, newTask) {
                     onUndoLastArchived={undoLastArchived}
                     onArchiveAllDone={archiveAllDone}
                     onRestoreAllArchived={restoreAllArchived}
-                    onResetFilter={handleResetFilter}
+                    onResetFilter={resetFilterToAll}
                 />
                 <TaskControls
                     onAddTask={addTaskHandler}
                     viewFilter={viewFilter}
-                    onChangeFilter={handleFilterChange} />
+                    onChangeFilter={changeFilterAndCancelEdit} />
                 <ListSummaries
                     visibleCount={visibleTasks.length}
                     totalCount={tasks.length}
@@ -189,11 +171,11 @@ function saveEditHandler(id, newTask) {
                     visibleTasks={visibleTasks}
                     editingId={editingId}
                     isEditingNow={isEditingNow}
-                    onToggleStatus={toggleStatusHandler}
+                    onToggleStatus={toggleStatus}
                     onDelete={deleteHandler}
                     onCancel={cancelEdit}
-                    onSave={saveEditHandler} 
-                    onStartEdit={startEdit}/>
+                    onSave={saveEditHandler}
+                    onStartEdit={startEdit} />
             </div>
         </div>
     );
