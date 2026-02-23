@@ -12,7 +12,7 @@ export default function TasksPage() {
     // State/Effect
     const { editingId, isEditingNow, startEdit, cancelEdit } = useEditing();
     const { viewFilter, changeFilter } = useViewFilter();
-    const { tasks, setTasks, taskCounts, hasArchivedTasks, hasDoneTasks, toggleStatus } = useTasks();
+    const { tasks, setTasks, taskCounts, hasArchivedTasks, hasDoneTasks, toggleStatus, archiveAllDone } = useTasks();
 
     // Helpers
     function normalizeText(text) {
@@ -107,17 +107,9 @@ export default function TasksPage() {
         cancelEdit();
     }
 
-    function archiveAllDone() {
-        setTasks((prev) =>
-            prev.map((item) => {
-                if (item.status === "done") {
-                    return { ...item, status: "archived" };
-                }
-                return item;
-            })
-        );
-        changeFilter("archived");
-        cancelEdit();
+    function archiveAll() {
+        archiveAllDone();
+        changeFilterAndCancelEdit("archived");
     }
 
     function restoreAllArchived() {
@@ -155,7 +147,7 @@ export default function TasksPage() {
                     isEditingNow={isEditingNow}
                     onClearArchived={clearArchivedTasksHandler}
                     onUndoLastArchived={undoLastArchived}
-                    onArchiveAllDone={archiveAllDone}
+                    onArchiveAllDone={archiveAll}
                     onRestoreAllArchived={restoreAllArchived}
                     onResetFilter={resetFilterToAll}
                 />

@@ -38,12 +38,24 @@ export default function useTasks() {
         );
     }
 
+    function archiveAllDone() {
+        setTasks((prev) =>
+            prev.map((item) => {
+                if (item.status === "done") {
+                    return { ...item, status: "archived" };
+                }
+                return item;
+            })
+        );
+    }
+
     return {
         tasks,
         setTasks,
         taskCounts,
         hasArchivedTasks,
         hasDoneTasks,
-        toggleStatus
+        toggleStatus,
+        archiveAllDone
     };
 }
