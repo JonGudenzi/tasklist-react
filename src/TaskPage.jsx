@@ -12,7 +12,7 @@ export default function TasksPage() {
     // State/Effect
     const { editingId, isEditingNow, startEdit, cancelEdit } = useEditing();
     const { viewFilter, changeFilter } = useViewFilter();
-    const { tasks, setTasks, taskCounts, hasArchivedTasks, hasDoneTasks, toggleStatus, archiveAllDone } = useTasks();
+    const { tasks, setTasks, taskCounts, toggleStatus, archiveAllDone } = useTasks();
 
     // Helpers
     function normalizeText(text) {
@@ -24,6 +24,9 @@ export default function TasksPage() {
         viewFilter === "all"
             ? tasks
             : tasks.filter((item) => item.status === viewFilter);
+
+    const hasArchivedTasks = taskCounts.archived > 0;
+    const hasDoneTasks = taskCounts.done > 0;
 
     // Handlers - Add / Validate
     function addTaskHandler(title) {
@@ -74,7 +77,7 @@ export default function TasksPage() {
         setTasks((prev) => prev.filter((item) => item.id !== idToDelete));
     }
 
-    
+
 
     // Bulk Actions
     function undoLastArchived() {
@@ -108,11 +111,13 @@ export default function TasksPage() {
     }
 
     function archiveAll() {
+        cancelEdit();
         archiveAllDone();
-        changeFilterAndCancelEdit("archived");
+        changeFilter("archived");
     }
 
     function restoreAllArchived() {
+        cancelEdit();
         setTasks((prev) =>
             prev.map((item) => {
                 if (item.status === "archived") {
@@ -120,9 +125,8 @@ export default function TasksPage() {
                 }
                 return item;
             })
-        );
+        );  
         changeFilter("done");
-        cancelEdit();
     }
 
     // Filter Actions
@@ -132,7 +136,7 @@ export default function TasksPage() {
     }
 
     function resetFilterToAll() {
-        handleFilterChange("all");
+        changeFilterAndCancelEdit("all");
     }
 
     // Render

@@ -23,9 +23,6 @@ export default function useTasks() {
     }, { open: 0, done: 0, archived: 0 })
     taskCounts.active = taskCounts.open + taskCounts.done;
 
-    const hasArchivedTasks = taskCounts.archived > 0;
-    const hasDoneTasks = taskCounts.done > 0;
-
     function toggleStatus(id) {
         setTasks(prev =>
             prev.map(item => {
@@ -53,8 +50,6 @@ export default function useTasks() {
         tasks,
         setTasks,
         taskCounts,
-        hasArchivedTasks,
-        hasDoneTasks,
         toggleStatus,
         archiveAllDone
     };
