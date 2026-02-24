@@ -170,7 +170,9 @@ export default function TasksPage() {
                 <TaskControls
                     onAddTask={addTaskHandler}
                     viewFilter={viewFilter}
-                    onChangeFilter={changeFilterAndCancelEdit} />
+                    onChangeFilter={changeFilterAndCancelEdit}
+                    sortOrder={sortOrder}
+                    onChangeSort={setSortOrder} />
                 <ListSummaries
                     visibleCount={visibleTasks.length}
                     totalCount={tasks.length}

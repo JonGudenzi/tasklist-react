@@ -5,6 +5,8 @@ export default function TaskControls({
     onAddTask,
     viewFilter,
     onChangeFilter,
+    sortOrder,
+    onChangeSort
 }) {
     return (
         <>
@@ -26,6 +28,20 @@ export default function TaskControls({
                     onClick={() => onChangeFilter("all")}>
                     Clear Filter
                 </button>}
+
+            <br />
+            <br />
+
+            <button 
+            onClick={() => onChangeSort("newest")}
+            disabled={sortOrder === "newest"}>
+                Newest
+            </button>
+            <button 
+            onClick={() => onChangeSort("oldest")}
+            disabled={sortOrder === "oldest"}>
+                Oldest
+            </button>
         </>
     );
 }
