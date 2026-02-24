@@ -1,3 +1,4 @@
+import { useState } from "react";
 import BulkActionsBar from "./BulkActionsBar";
 import ListSummaries from "./ListSummaries";
 import TaskListBody from "./TaskListBody";
@@ -7,12 +8,14 @@ import useTasks from "./hooks/useTasks";
 import useEditing from "./hooks/useEditing";
 
 
+
 export default function TasksPage() {
 
     // State/Effect
     const { editingId, isEditingNow, startEdit, cancelEdit } = useEditing();
     const { viewFilter, changeFilter } = useViewFilter();
     const { tasks, setTasks, taskCounts, toggleStatus, archiveAllDone } = useTasks();
+    const [sortOrder, setSortOrder] = useState("newest");
 
     // Helpers
     function normalizeText(text) {
@@ -27,6 +30,15 @@ export default function TasksPage() {
 
     const hasArchivedTasks = taskCounts.archived > 0;
     const hasDoneTasks = taskCounts.done > 0;
+
+    const sortVisibleTasks = [...visibleTasks].sort((a, b) => {
+        if (sortOrder === "newest") {
+            return b.id - a.id
+        } else {
+            return a.id - b.id
+        }
+    })
+
 
     // Handlers - Add / Validate
     function addTaskHandler(title) {
@@ -125,7 +137,7 @@ export default function TasksPage() {
                 }
                 return item;
             })
-        );  
+        );
         changeFilter("done");
     }
 
@@ -164,7 +176,7 @@ export default function TasksPage() {
                     totalCount={tasks.length}
                     taskCounts={taskCounts} />
                 <TaskListBody
-                    visibleTasks={visibleTasks}
+                    visibleTasks={sortVisibleTasks}
                     editingId={editingId}
                     isEditingNow={isEditingNow}
                     onToggleStatus={toggleStatus}
