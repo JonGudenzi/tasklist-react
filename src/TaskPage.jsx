@@ -13,15 +13,20 @@ export default function TasksPage() {
     const { editingId, isEditingNow, startEdit, cancelEdit } = useEditing();
     const { viewFilter, changeFilter } = useViewFilter();
     const { tasks, setTasks, taskCounts, toggleStatus, archiveAllDone } = useTasks();
-    const [sortOrder, setSortOrder] = useState(()=>{
+    const [sortOrder, setSortOrder] = useState(() => {
         const savedSortOrder = localStorage.getItem("sortOrder");
+        if (!savedSortOrder) {
+            return "newest";
+        }
         const parsed = JSON.parse(savedSortOrder);
-        return (parsed === "newest" || parsed === "oldest") ? parsed : "newest";
+        if (parsed === "newest" || parsed === "oldest") {
+            return parsed
+        } return "newest";
     });
 
     useEffect(() => {
         localStorage.setItem("sortOrder", JSON.stringify(sortOrder));
-    },[sortOrder]);
+    }, [sortOrder]);
 
     // Helpers
     function normalizeText(text) {
