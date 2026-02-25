@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BulkActionsBar from "./BulkActionsBar";
 import ListSummaries from "./ListSummaries";
 import TaskListBody from "./TaskListBody";
@@ -7,15 +7,21 @@ import useViewFilter from "./hooks/useViewFilter";
 import useTasks from "./hooks/useTasks";
 import useEditing from "./hooks/useEditing";
 
-
-
 export default function TasksPage() {
 
     // State/Effect
     const { editingId, isEditingNow, startEdit, cancelEdit } = useEditing();
     const { viewFilter, changeFilter } = useViewFilter();
     const { tasks, setTasks, taskCounts, toggleStatus, archiveAllDone } = useTasks();
-    const [sortOrder, setSortOrder] = useState("newest");
+    const [sortOrder, setSortOrder] = useState(()=>{
+        const savedSortOrder = localStorage.getItem("sortOrder");
+        const parsed = JSON.parse(savedSortOrder);
+        return (parsed === "newest" || parsed === "oldest") ? parsed : "newest";
+    });
+
+    useEffect(() => {
+        localStorage.setItem("sortOrder", JSON.stringify(sortOrder));
+    },[sortOrder]);
 
     // Helpers
     function normalizeText(text) {
@@ -83,13 +89,10 @@ export default function TasksPage() {
         cancelEdit();
     }
 
-
     // Per Item Actions
     function deleteHandler(idToDelete) {
         setTasks((prev) => prev.filter((item) => item.id !== idToDelete));
     }
-
-
 
     // Bulk Actions
     function undoLastArchived() {
