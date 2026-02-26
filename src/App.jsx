@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TaskList from "./TaskPage";
+import TaskPage from "./TaskPage";
 
 export default function App() {
 
@@ -15,7 +15,7 @@ export default function App() {
     <div>
       <button onClick={hideViewList}>{viewList ? "Hide task list" : "Show task list"}</button>
       {
-        viewList && <TaskList />
+        viewList && <TaskPage />
       }
 
     </div>

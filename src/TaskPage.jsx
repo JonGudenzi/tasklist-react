@@ -42,7 +42,7 @@ export default function TasksPage() {
     const hasArchivedTasks = taskCounts.archived > 0;
     const hasDoneTasks = taskCounts.done > 0;
 
-    const sortVisibleTasks = [...visibleTasks].sort((a, b) => {
+    const sortedVisibleTasks = [...visibleTasks].sort((a, b) => {
         if (sortOrder === "newest") {
             return b.id - a.id
         } else {
@@ -186,7 +186,7 @@ export default function TasksPage() {
                     totalCount={tasks.length}
                     taskCounts={taskCounts} />
                 <TaskListBody
-                    visibleTasks={sortVisibleTasks}
+                    visibleTasks={sortedVisibleTasks}
                     editingId={editingId}
                     isEditingNow={isEditingNow}
                     onToggleStatus={toggleStatus}
