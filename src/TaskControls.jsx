@@ -32,14 +32,14 @@ export default function TaskControls({
             <br />
             <br />
 
-            <button 
-            onClick={() => onChangeSort("newest")}
-            disabled={sortOrder === "newest"}>
+            <button
+                onClick={() => onChangeSort("newest")}
+                disabled={sortOrder === "newest"}>
                 Newest
             </button>
-            <button 
-            onClick={() => onChangeSort("oldest")}
-            disabled={sortOrder === "oldest"}>
+            <button
+                onClick={() => onChangeSort("oldest")}
+                disabled={sortOrder === "oldest"}>
                 Oldest
             </button>
         </>

@@ -26,7 +26,7 @@ export default function TaskListBody({
                         task={item.title}
                         status={item.status}
                         onToggleStatus={() => onToggleStatus(item.id)}
-                        onStartEdit={() => {if (!isArchived) {onStartEdit(item.id)}}}
+                        onStartEdit={() => { if (!isArchived) { onStartEdit(item.id) } }}
                         onDelete={() => onDelete(item.id)}
                         isEditing={isEditing}
                         onCancel={onCancel}
