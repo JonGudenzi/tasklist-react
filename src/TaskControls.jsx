@@ -6,7 +6,8 @@ export default function TaskControls({
     viewFilter,
     onChangeFilter,
     sortOrder,
-    onChangeSort
+    onChangeSort,
+    visibleCount
 }) {
     return (
         <>
@@ -34,12 +35,12 @@ export default function TaskControls({
 
             <button
                 onClick={() => onChangeSort("newest")}
-                disabled={sortOrder === "newest"}>
+                disabled={sortOrder === "newest" || visibleCount <= 1}>
                 Newest
             </button>
             <button
                 onClick={() => onChangeSort("oldest")}
-                disabled={sortOrder === "oldest"}>
+                disabled={sortOrder === "oldest" || visibleCount <= 1}>
                 Oldest
             </button>
         </>

@@ -180,7 +180,8 @@ export default function TasksPage() {
                     viewFilter={viewFilter}
                     onChangeFilter={changeFilterAndCancelEdit}
                     sortOrder={sortOrder}
-                    onChangeSort={setSortOrder} />
+                    onChangeSort={setSortOrder}
+                    visibleCount={visibleTasks.length} />
                 <ListSummaries
                     visibleCount={visibleTasks.length}
                     totalCount={tasks.length}
