@@ -43,10 +43,17 @@ export default function TasksPage() {
     const hasDoneTasks = taskCounts.done > 0;
 
     const sortedVisibleTasks = [...visibleTasks].sort((a, b) => {
-        if (sortOrder === "newest") {
-            return b.id - a.id
-        } else {
-            return a.id - b.id
+        switch (sortOrder) {
+            case "newest":
+                return b.id - a.id
+            case "oldest":
+                return a.id - b.id
+            case "titleAsc":
+                return a.title.localeCompare(b.title)
+            case "titleDsc":
+                return b.title.localeCompare(a.title)
+            default:
+                return 0;
         }
     })
 

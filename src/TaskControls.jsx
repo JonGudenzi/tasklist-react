@@ -43,6 +43,16 @@ export default function TaskControls({
                 disabled={sortOrder === "oldest" || visibleCount <= 1}>
                 Oldest
             </button>
+            <button
+                onClick={() => onChangeSort("titleAsc")}
+                disabled={sortOrder === "titleAsc" || visibleCount <= 1}>
+                A-Z
+            </button>
+            <button
+                onClick={() => onChangeSort("titleDsc")}
+                disabled={sortOrder === "titleDsc" || visibleCount <= 1}>
+                Z-A
+            </button>
         </>
     );
 }
