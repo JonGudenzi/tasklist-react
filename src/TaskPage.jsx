@@ -19,7 +19,9 @@ export default function TasksPage() {
             return "newest";
         }
         const parsed = JSON.parse(savedSortOrder);
-        if (parsed === "newest" || parsed === "oldest") {
+
+        const sortNames = ["newest", "oldest", "titleAsc", "titleDsc"];
+        if (sortNames.includes(parsed)) {
             return parsed
         } return "newest";
     });
