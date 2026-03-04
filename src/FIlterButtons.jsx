@@ -11,6 +11,10 @@ export default function FilterButtons({
                 Open {viewFilter === "open" && "✓"}
             </button>
 
+            <button onClick={() => onChangeFilter("active")}>
+                Active {viewFilter === "active" && "✓"}
+            </button>
+
             <button onClick={() => onChangeFilter("done")}>
                 Done {viewFilter === "done" && "✓"}
             </button>

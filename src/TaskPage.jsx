@@ -36,10 +36,18 @@ export default function TasksPage() {
     }
 
     // Derived Values
-    const visibleTasks =
-        viewFilter === "all"
-            ? tasks
-            : tasks.filter((item) => item.status === viewFilter);
+    const activeTasks = tasks.filter((item) =>
+        item.status !== "archived"
+    );
+
+    let visibleTasks;
+
+    if (viewFilter === "all") {
+        visibleTasks = tasks;
+    } else if (viewFilter === "active") {
+        visibleTasks = activeTasks;
+    } else {
+        visibleTasks = tasks.filter((item) => item.status === viewFilter)};
 
     const hasArchivedTasks = taskCounts.archived > 0;
     const hasDoneTasks = taskCounts.done > 0;
