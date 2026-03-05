@@ -67,7 +67,6 @@ export default function TasksPage() {
         }
     })
 
-
     // Handlers - Add / Validate
     function addTaskHandler(title) {
         const normalized = normalizeText(title);
